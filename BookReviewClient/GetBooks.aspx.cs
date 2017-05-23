@@ -11,12 +11,16 @@ public partial class GetBooks : System.Web.UI.Page
         new BookRevReference.BookReviewServiceClient();
     protected void Page_Load(object sender, EventArgs e)
     {
+        if(!IsPostBack)
         FillAuthorList();
     }
 
     protected void AuthorDropDownList_SelectedIndexChanged(object sender, EventArgs e)
     {
-        
+        BookRevReference.Book[] books =
+            sc.GetBooksByAuthor(AuthorDropDownList.SelectedItem.Text);
+        GridView1.DataSource = books;
+        GridView1.DataBind();
     }
 
     protected void FillAuthorList()
